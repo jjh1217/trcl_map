@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no, maximum-scale=1, width=device-width, viewport-fit=cover">
+        <title>TRCL Map</title>
+        <link href="./assets/css/common.css" rel="stylesheet">
+        <link href="./assets/css/common_responsive.css" rel="stylesheet">
+        <link href="./assets/css/style.css" rel="stylesheet">
+        <link href="./assets/css/responsive.css" rel="stylesheet">
+        <link rel="shortcut icon" href="./assets/icon/favicon.ico" type="image/x-icon"/>
+    </head>
+    <body>
+        <div class="loading">
+            <div class="loading_box">
+                <p><span></span></p>
+                <h2>TRCL</h2>
+            </div>
+        </div><!--//loading-->
+
+        <div class="wait">
+            <p>Please Wait</p>
+        </div><!--//wait-->
+
+        <section class="map_section">
+            <article class="map_wrap">
+                <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
+                <div id="category">
+                    <p id="OL7" data-order="3"><a href="./map_gas.html" class="gas">주유소</a></p>
+                    <p><a href="./map_traffic.html" class="traffic">교통</a></p>
+                    <p><a href="./map_electric.html" class="electric active">전기차</a></p>
+                </div>
+            </article>
+            <span class="my_gps"></span>
+            <p class="map_tip">공공기간의 데이터와 차이가 있을 수 있습니다.</p>
+        </section><!--//map_section-->
+    </body>
+
+    <script src="./assets/js/jquery-3.6.0.min.js"></script>
+    <script src="./assets/js/jquery-migrate-1.4.1.min.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=2673091d0ce3e87c574b1905bd709c41&libraries=services,clusterer,drawing"></script>
+    <script>
+        // 지도 기본 설정
+        var mapContainer = document.getElementById("map");
+        var mapOption = {
+            center: new kakao.maps.LatLng(33.450701, 126.570667),
+            level: 7 // 지도의 확대 레벨
+        };
+        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도 생성
+        var current_location; // 현 위치 마커
+        var my_location; // 내 위치 마커
+        var location_Array = []; // 내 위치 마커 배열
+        var zoomControl = new kakao.maps.ZoomControl(); // 줌 컨트롤
+
+        // 커스텀 오버레이 기본 설정
+        var overlayPlace = new kakao.maps.CustomOverlay({zIndex:1});
+        var overlayContent = document.createElement("section");
+        overlayContent.className = "overlay_box";
+        overlayPlace.setContent(overlayContent);
+
+        // 앱 로드 시 현 위치
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var lat = position.coords.latitude, // 위도
+                lon = position.coords.longitude; // 경도
+                
+                var locPosition = new kakao.maps.LatLng(lat, lon);
+                var current_content = '<div class ="current_marker"></div>';
+
+                current_location = new kakao.maps.CustomOverlay({ // 현 위치 마커 설정
+                    position: locPosition,
+                    content: current_content
+                });
+
+                // 줌 레벨에 따라 현 위치 마커 보여주기
+                kakao.maps.event.addListener(map, "zoom_changed", function() {        
+                    if(map.getLevel() < 7) {
+                        current_location.setMap(map);
+                    } else {
+                        current_location.setMap(null);
+                    }                    
+                });
+                map.panTo(locPosition);
+                
+                $(document).ready(function(){
+                    setTimeout(() => {
+                        $(".loading").fadeOut(200);
+                    }, 3000);
+                });
+            });
+        }
+
+        // 내 위치
+        $(".my_gps").on("click", function(){
+            /* $(".wait").fadeIn(300);
+            setTimeout(function() {
+                $(".wait").fadeOut(1000);
+            }, 1000); */
+
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    var lat = position.coords.latitude, // 위도
+                    lon = position.coords.longitude; // 경도
+                    
+                    var locPosition = new kakao.maps.LatLng(lat, lon);
+                    var my_content = '<div class ="my_marker"></div>';
+                    
+                    my_location = new kakao.maps.CustomOverlay({ // 내 위치 마커 설정
+                        position: locPosition,
+                        content: my_content   
+                    });
+                    
+                    location_Array.push(my_location);
+                    location_Array.forEach(function(my_location){
+                        my_location.setMap(null); // 중복된 내 위치 마커 제거
+                    });
+                    my_location.setMap(map);
+                    
+                    kakao.maps.event.addListener(map, "zoom_changed", function() {        
+                        current_location.setMap(null); // 현 위치 마커 제거
+                    });
+
+                    overlayPlace.setMap(null); // 커스텀 오버레이 제거
+                    map.setLevel(5);
+                    map.panTo(locPosition);
+                });
+            }
+        });
+
+        // 마커 클러스터러 생성
+        var clusterer = new kakao.maps.MarkerClusterer({
+            map: map,
+            averageCenter: true,
+            minLevel: 10,
+            disableClickZoom: true
+        });
+        
+        // 클러스터러 json 파일 적용
+        $.get("./assets/js/chicken.json", function(data) {
+            var markers = $(data.positions).map(function(i, position) {
+                var marker_content = document.createElement("div");
+                marker_content.className = "electric_marker";
+                var marker = new kakao.maps.CustomOverlay({ // 마커 커스텀
+                    position : new kakao.maps.LatLng(position.lat, position.lng),
+                    content: marker_content
+                });
+                
+                // 마커 클릭 시 해당 오버레이 정보 보여주기
+                marker_content.onclick = function() {
+                    var content = `<div class="electric">
+                                       <h2>${position.lat}</h2>
+                                       <p>
+                                           <a href="#"></a>
+                                           <span onclick="closeOverlay()"></span>
+                                       </p>
+                                   </div>
+                                   <article>
+                                       <h3>${position.title}</h3>
+                                       <h4>( 지번：${position.lng})</h4>
+                                       <p>Tel：02-484-0373</p>
+                                   </article>`;
+                    overlayContent.innerHTML = content; // 커스텀 오버레이 내용 설정
+                    overlayPlace.setPosition(new kakao.maps.LatLng(position.lat, position.lng));
+                    overlayPlace.setMap(map);
+                    map.panTo(new kakao.maps.LatLng(position.lat, position.lng));
+                };
+                return marker;
+            });
+            clusterer.addMarkers(markers);
+        });
+
+        // 클러스터리 클릭 이벤트
+        kakao.maps.event.addListener(clusterer, "clusterclick", function(cluster) {
+            var level = map.getLevel()-3;
+            map.setLevel(level, {anchor: cluster.getCenter()});
+        });
+
+        // 커스텀 오버레이를 닫기 함수 
+        function closeOverlay() {
+            overlayPlace.setMap(null);     
+        }
+    </script>
+</html>

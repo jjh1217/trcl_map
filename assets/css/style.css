@@ -1,0 +1,304 @@
+/* map */
+.map_section {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.map_wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+#category {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    width: 100%;
+    background-color: rgba(255, 255, 255, .9);
+    box-shadow: 0 -2px 6px rgba(85, 85, 85, 0.2);
+    -webkit-backdrop-filter: blur(1px);
+    backdrop-filter: blur(1px);
+}
+.map_tip {
+    position: absolute;
+    left: 50%;
+    top: 16px;
+    z-index: 999;
+    -webkit-transform: translateX(-50%);
+    width: 80%;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: .7rem;
+    text-align: center;
+    color: #FFF;
+    background-color: rgba(0, 0, 0, .5);
+    -webkit-transition: all .3s ease;
+}
+#category a {
+    display: block;
+    padding: 48px 0 16px;
+    text-align: center;
+    font-size: .9rem;
+    color: #555;
+    background:  no-repeat center 16px;
+    background-size: 28px;
+}
+#category a.gas {background-image: url(../icon/off_gas.svg);}
+#category a.traffic {background-image: url(../icon/off_traffic.svg);}
+#category a.electric {background-image: url(../icon/off_electric.svg);}
+#category .active {
+    font-weight: 500;
+    color: #487CE5;
+}
+#category .active.gas {background-image: url(../icon/on_gas.svg);}
+#category .active.traffic {background-image: url(../icon/on_traffic.svg);}
+#category .active.electric {background-image: url(../icon/on_electric.svg);}
+.my_gps {
+    position: absolute;
+    right: 20px;
+    bottom: 108px;
+    z-index: 999;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    background: url(../icon/my_gps.svg) no-repeat center center rgba(255, 255, 255, .9);
+    background-size: 24px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .5);
+    -webkit-backdrop-filter: blur(1px);
+    backdrop-filter: blur(1px);
+}
+.my_marker {
+    display: block;
+    width: 48px;
+    height: 48px;
+    border-radius: 999px;
+    background: url(../img/pin_my.gif) no-repeat center center;
+    background-size: 100%;
+}
+.current_marker {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    background: url(../icon/pin_location.svg) no-repeat center center;
+    background-size: 100%;
+}
+.gas_marker {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    background: url(../icon/pin_gas.svg) no-repeat center center;
+    background-size: 100%;
+}
+.electric_marker {
+    display: block;
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    background: url(../icon/pin_electric.svg) no-repeat center center;
+    background-size: 100%;
+}
+.overlay_box {
+    position: absolute;
+    left: -50%;
+    bottom: 28px;
+    -webkit-transform: translateX(-50%);
+    width: 280px;
+    border-radius: 8px;
+    background-color: #FFF;
+    box-shadow: 0 2px 8px 2px rgba(0, 0, 0, .2);
+}
+.overlay_box:after {
+    content: "";
+	position: absolute;
+	left: 50%;
+	bottom: 0;
+	width: 0;
+	height: 0;
+	border: 10px solid transparent;
+	border-top-color: #FFF;
+	border-bottom: 0;
+	margin-left: -10px;
+	margin-bottom: -10px;
+}
+.overlay_box > div {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    padding: 10px 12px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+.overlay_box > div.gas {background-color: #E03643;}
+.overlay_box > div.electric {background-color: #3CA1FC;}
+.overlay_box > div h2 {
+    align-self: center;
+    font-size: .9rem;
+    font-weight: 700;
+    line-height: 1.45;
+    white-space: normal;
+    color: #FFF;
+    -webkit-transition: all .3s ease;
+}
+.overlay_box > div p {
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: start;
+}
+.overlay_box > div p a {
+    display: block;
+    width: 24px;
+    height: 24px;
+    background: url(../icon/link_fff.svg) no-repeat right center;
+    background-size: 18px;
+    -webkit-transition: all .3s ease;
+}
+.overlay_box > div p span {
+    display: block;
+    width: 24px;
+    height: 24px;
+    background: url(../icon/x_fff.svg) no-repeat right center;
+    background-size: 12px;
+    -webkit-transition: all .3s ease;
+}
+.overlay_box > article {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 6px;
+    padding: 10px 12px 12px;
+}
+.overlay_box > article h3 {
+    font-size: .9rem;
+    line-height: 1.45;
+    white-space: normal;
+    color: #333;
+    -webkit-transition: all .3s ease;
+}
+.overlay_box > article h4 {
+    font-size: .7rem;
+    line-height: 1.45;
+    white-space: normal;
+    color: #777;
+    -webkit-transition: all .3s ease;
+}
+.overlay_box > article p {
+    display: block;
+    font-size: .8rem;
+    line-height: 1.45;
+    white-space: normal;
+    color: #0f7833;
+    -webkit-transition: all .3s ease;
+}
+
+/* map - ready */
+.map_ready {
+    position: absolute;
+    left: 0;
+    top: 45%;
+    -webkit-transform: translateY(-50%);
+    width: 100%;
+    padding: 0 16px;
+}
+.map_ready h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: center;
+    color: #333;
+    -webkit-transition: all .3s ease;
+}
+.map_ready img {
+    display: block;
+    width: 100%;
+    margin: 32px auto;
+    -webkit-transition: all .3s ease;
+}
+.map_ready p {
+    width: 100%;
+    margin: 0 auto;
+    font-size: .8rem;
+    text-align: center;
+    line-height: 1.65;
+    color: rgb(0, 191, 255);
+    -webkit-transition: all .3s ease;
+}
+
+/* map - gas */
+.placeinfo_wrap {
+    position: absolute;
+    left: -138px;
+    bottom: 34px;
+    width: 280px;
+}
+.placeinfo_wrap .after {
+    content: "";
+    position: relative;
+    left: 50%;
+    width: 22px;
+    height: 12px;
+    margin-left: -12px;
+    background: url("https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png") no-repeat center;
+    background-size: 100%;
+}
+.placeinfo {
+    position: relative;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-bottom: 2px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+}
+.placeinfo:nth-of-type(n) {
+    border: 0;
+    box-shadow: 0 1px 2px #888;
+}
+.placeinfo > h2 {
+    padding: 12px 68px 12px 12px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    font-size: .9rem;
+    font-weight: 700;
+    color: #FFF;
+    background-color: #E03643;
+}
+.placeinfo .link {
+    display: block;
+    position: absolute;
+    right: 42px;
+    top: 0;
+    width: 18px;
+    height: 42px;
+    background: url(../icon/link_fff.svg) no-repeat right center;
+    background-size: 100%;
+}
+.placeinfo .close {
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 42px;
+    height: 42px;
+    background: url(../icon/x_fff.svg) no-repeat center;
+    background-size: 12px;
+}
+.placeinfo > div {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 6px;
+    padding: 12px;
+}
+.placeinfo > div h3 {
+    font-size: .9rem;
+    color: #333;
+}
+.placeinfo > div h4 {
+    font-size: .7rem;
+    color: #777;
+}
+.placeinfo > div span {
+    display: block;
+    font-size: .8rem;
+    color: #0f7833;
+}

@@ -1,0 +1,57 @@
+/* mobile */
+@media(min-width: 360px) {}
+
+/* tablet */
+@media(min-width: 768px) {
+    /* reCAPTACHA */
+    .g-box {margin-top: 48px;}
+
+    /* loading */
+    .loading_box p {
+        width: 100px;
+        height: 100px;
+    }
+    .loading_box span {
+        width: 100px;
+        height: 100px;
+    }
+    .loading_box h2 {
+        padding-top: 12px;
+        font-size: 2.5rem;
+        letter-spacing: 6px;
+    }
+
+    /* wait */
+    .wait p {font-size: 1.3rem;}
+
+    /* box */
+    .box-ft {padding-top: 80px;}
+    .box-ftb {padding: 80px 0 156px;}
+    .box-t {padding-top: 48px;}
+    .box-tb {padding: 48px 0;}
+    .box-lr {padding: 0 60px;}
+    .box-white {padding-top: 80px;}
+    .box-white > article {padding: 48px 60px;}
+
+    /* modal - confirm */
+    .confirm-box {
+        width: 400px;
+        padding: 32px 24px;
+        border-radius: 8px;
+    }
+    .confirm-box h3 {
+        padding-left: 56px;
+        font-size: 1.5rem;
+        line-height: 52px;
+        background-size: 52px;
+    }
+    .confirm-box p {
+        padding: 12px 8px 40px;
+        font-size: 1.1rem;
+    }
+    .confirm-btn {column-gap: 20px;}
+    .confirm-btn > * {font-size: 1.2rem;}
+}
+
+/* tablet - pro */
+@media(min-width: 1024px) {}

@@ -1,0 +1,118 @@
+/* tablet */
+@media(min-width: 768px) {
+    #category a {
+        padding: 72px 0 24px;
+        font-size: 1.2rem;
+        background-position-y: 20px;
+        background-size: 42px;
+    }
+    .my_gps {
+        right: 48px;
+        bottom: 168px;
+        width: 64px;
+        height: 64px;
+        background-size: 36px;
+    }
+    .map_tip {
+        top: 24px;
+        width: 440px;
+        padding: 12px;
+        font-size: .9rem;
+    }
+    .my_marker {
+        width: 68px;
+        height: 68px;
+    }
+    .current_marker {
+        width: 44px;
+        height: 44px;
+    }
+    .gas_marker {
+        width: 44px;
+        height: 44px;
+    }
+    .electric_marker {
+        width: 44px;
+        height: 44px;
+    }
+    .overlay_box {
+        bottom: 38px;
+        width: 320px;
+    }
+    .overlay_box:after {
+        border-width: 14px;
+        margin-left: -14px;
+        margin-bottom: -14px;
+    }
+    .overlay_box > div {
+        padding: 12px 14px;
+    }
+    .overlay_box > div h2 {
+        font-size: 1rem;
+    }
+    .overlay_box > div p a {
+        width: 28px;
+        height: 26px;
+        background-size: 20px;
+    }
+    .overlay_box > div p span {
+        width: 28px;
+        height: 26px;
+        background-size: 15px;
+    }
+    .overlay_box > article {
+        row-gap: 8px;
+        padding: 12px 14px 14px;
+    }
+    .overlay_box > article h3 {font-size: 1rem;}
+    .overlay_box > article h4 {font-size: .8rem;}
+    .overlay_box > article span {font-size: .9rem;}
+
+    /* map - ready */
+    .map_ready {padding: 0;}
+    .map_ready h3 {font-size: 1.5rem;}
+    .map_ready img {
+        width: 520px;
+        margin: 52px auto;
+    }
+    .map_ready p {
+        width: 520px;
+        font-size: 1.1rem;
+    }
+
+    /* map - gas */
+    .placeinfo_wrap {
+        left: -160px;
+        bottom: 44px;
+        width: 320px;
+    }
+    .placeinfo_wrap .after {
+        width: 30px;
+        height: 16px;
+        margin-left: -14px;
+    }
+    .placeinfo > h2 {
+        padding: 14px 76px 14px 14px;
+        font-size: 1rem;
+    }
+    .placeinfo .link {
+        right: 48px;
+        width: 20px;
+        height: 48px;
+    }
+    .placeinfo .close {
+        width: 48px;
+        height: 48px;
+        background-size: 14px;
+    }
+    .placeinfo > div {
+        row-gap: 8px;
+        padding: 14px;
+    }
+    .placeinfo > div h3 {font-size: 1rem;}
+    .placeinfo > div h4 {font-size: .8rem;}
+    .placeinfo > div span {font-size: .9rem;}
+}
+
+/* tablet - pro */
+@media(min-width: 1024px) {}
