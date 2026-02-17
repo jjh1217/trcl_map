@@ -73,12 +73,10 @@
                 current_location.setMap(map);
                 map.panTo(locPosition);
                 
-                $(document).ready(function(){
-                    setTimeout(() => {
-                        $(".loading").fadeOut(200);
-                    }, 3000);
-                    $('.gas').trigger("click");
-                });
+                setTimeout(() => {
+                    $(".loading").fadeOut(200);
+                }, 3000);
+                $('.gas').trigger("click");
             });
         }
 
